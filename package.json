@@ -1,12 +1,19 @@
 {
 	"name": "@nan0web/sync",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "High-performance site synchronization engine with remote manifests and atomic locks.",
 	"type": "module",
 	"bin": {
-		"nan0sync": "./bin/nan0sync.js",
-		"nan0-sync": "./bin/nan0sync.js"
+		"nan0sync": "bin/nan0sync.js",
+		"nan0-sync": "bin/nan0sync.js"
 	},
+	"files": [
+		"src/**/*.js",
+		"!src/web/**",
+		"!src/**/*.test.js",
+		"bin/**/*.js",
+		"README.md"
+	],
 	"main": "src/Export.js",
 	"scripts": {
 		"test": "node --test src/*.test.js",
@@ -22,14 +29,15 @@
 		"docs:dev": "npm run dev"
 	},
 	"dependencies": {
-		"@nan0web/icons": "workspace:*",
-		"@nan0web/log": "workspace:*",
-		"@nan0web/ui-cli": "workspace:*",
-		"basic-ftp": "^5.0.5",
-		"js-yaml": "^4.1.1",
-		"lit": "^3.3.2"
+		"@nan0web/db-fs": "^1.1.1",
+		"@nan0web/log": "^1.1.1",
+		"basic-ftp": "^5.0.5"
 	},
 	"devDependencies": {
+		"@nan0web/icons": "workspace:*",
+		"@nan0web/ui-cli": "workspace:*",
+		"js-yaml": "^4.1.1",
+		"lit": "^3.3.2",
 		"nan0web.app": "workspace:*",
 		"typescript": "^5.3.3",
 		"vite": "^7.3.1"

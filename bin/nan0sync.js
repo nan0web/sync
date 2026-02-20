@@ -12,6 +12,7 @@ const logger = new Logger()
 
 const options = {
 	'dry-run': { type: 'boolean', default: false },
+	debug: { type: 'boolean', default: false },
 	help: { type: 'boolean', default: false },
 	env: { type: 'string' },
 }
@@ -29,6 +30,7 @@ Commands:
 
 Options:
   --dry-run    Preview changes without uploading
+  --debug      Show detailed paths and FTP commands
   --env <env>  Set environment (stage, prod)
   --help       Show help
 `)
@@ -37,7 +39,14 @@ Options:
 
 const command = positionals[0] || 'push'
 
+/** Join remotePath + file without double slashes */
+function joinRemote(base, file) {
+	const b = base.endsWith('/') ? base.slice(0, -1) : base
+	return b ? `${b}/${file}` : `/${file}`
+}
+
 async function runEngine() {
+	const debug = values.debug
 	const cliArgs = {
 		dryRun: values['dry-run'],
 	}
@@ -48,6 +57,16 @@ async function runEngine() {
 	if (command === 'status') {
 		logger.info('nan•sync Config Status:')
 		console.log(config)
+	}
+
+	if (debug) {
+		logger.info('\n[debug] Resolved config:')
+		logger.info(`  host:       ${config.host}`)
+		logger.info(`  remotePath: ${config.remotePath}`)
+		logger.info(`  source:     ${config.source}`)
+		logger.info(`  adapter:    ${config.adapter}`)
+		logger.info(`  cwd:        ${process.cwd()}`)
+		logger.info('')
 	}
 
 	logger.info(
@@ -120,13 +139,14 @@ async function runEngine() {
 		}
 
 		if (command === 'status' || (diff.upload.length === 0 && diff.delete.length === 0)) {
-			// Status ends here, or if there's nothing to push
+			await adapter.disconnect()
 			yield { phase: 'done', message: 'Nothing to sync.' }
 			return
 		}
 
 		let current = 0
 		const totalUploads = diff.upload.length
+		const failedUploads = []
 		for (const file of diff.upload) {
 			current++
 			yield {
@@ -136,8 +156,20 @@ async function runEngine() {
 				message: `Uploading ${file}...`,
 			}
 			const localFile = path.resolve(config.source, file)
-			const remoteFile = `${config.remotePath}/${file}`
-			if (!config.dryRun) await adapter.uploadFile(localFile, remoteFile)
+			const remoteFile = joinRemote(config.remotePath, file)
+			if (debug) {
+				yield { phase: 'debug', message: `  local:  ${localFile}` }
+				yield { phase: 'debug', message: `  remote: ${remoteFile}` }
+			}
+			if (!config.dryRun) {
+				try {
+					await adapter.uploadFile(localFile, remoteFile)
+				} catch (err) {
+					failedUploads.push({ file, error: err.message })
+					yield { phase: 'warn', message: `⚠ Failed: ${file} (${err.message})` }
+					if (debug) yield { phase: 'debug', message: `  FTP code: ${err.code || 'N/A'}` }
+				}
+			}
 		}
 
 		current = 0
@@ -151,7 +183,7 @@ async function runEngine() {
 					progress: { current, total: totalDeletes },
 					message: `Deleting ${file}...`,
 				}
-				const remoteFile = `${config.remotePath}/${file}`
+				const remoteFile = joinRemote(config.remotePath, file)
 				if (!config.dryRun) await adapter.deleteFile(remoteFile)
 			}
 		}
@@ -177,7 +209,18 @@ async function runEngine() {
 
 		yield { phase: 'disconnect', message: 'Disconnecting...' }
 		await adapter.disconnect()
-		yield { phase: 'done', message: 'Sync process finished.' }
+
+		if (failedUploads.length > 0) {
+			yield { phase: 'error', message: `${failedUploads.length} file(s) failed to upload:` }
+			for (const f of failedUploads) {
+				yield { phase: 'error', message: `  ✗ ${f.file}` }
+			}
+		}
+
+		yield {
+			phase: 'done',
+			message: `Sync finished. ${totalUploads - failedUploads.length}/${totalUploads} uploaded.`,
+		}
 	})()
 
 	// Consume generator
@@ -205,6 +248,8 @@ async function runEngine() {
 					logger.error(state.message)
 				} else if (state.phase === 'warn') {
 					logger.warn(state.message)
+				} else if (state.phase === 'debug') {
+					process.stdout.write(`\x1b[90m${state.message}\x1b[0m\n`)
 				} else if (state.phase === 'diff') {
 					logger.info(state.message)
 					if (state.diff.upload.length > 0)

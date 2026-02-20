@@ -46,10 +46,12 @@ export class FTPAdapter {
 		}
 		try {
 			await this.client.ensureDir(dir)
-			await this.client.cd('/') // Reset to root after ensureDir
 		} catch (err) {
-			this.logger.error(`Failed creating directory ${dir}: ${err.message}`)
+			// Silently ignore — directory may already exist or be auto-created
 		}
+		try {
+			await this.client.cd(this.config.remotePath || '/')
+		} catch (_) {}
 	}
 
 	async uploadFile(localPath, remotePath) {
@@ -57,18 +59,22 @@ export class FTPAdapter {
 			this.logger.info(`[Dry Run] Would upload file: ${localPath} -> ${remotePath}`)
 			return
 		}
-		// Calculate the remote directory from path
-		const remoteDir = remotePath.substring(0, remotePath.lastIndexOf('/'))
-		if (remoteDir) {
-			await this.createRemoteDirectory(remoteDir)
+
+		// Ensure parent directory exists
+		const lastSlash = remotePath.lastIndexOf('/')
+		if (lastSlash > 0) {
+			const remoteDir = remotePath.substring(0, lastSlash)
+			try {
+				await this.client.ensureDir(remoteDir)
+			} catch (_) {}
+			// Always reset CWD to root to avoid drift
+			try {
+				await this.client.cd('/')
+			} catch (_) {}
 		}
 
-		try {
-			await this.client.uploadFrom(localPath, remotePath)
-		} catch (err) {
-			this.logger.error(`Upload failed for ${localPath}: ${err.message}`)
-			throw err
-		}
+		// Upload using absolute path
+		await this.client.uploadFrom(localPath, remotePath)
 	}
 
 	async deleteFile(remotePath) {
