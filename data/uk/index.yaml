@@ -1,0 +1,59 @@
+title: 'NaN•Sync'
+description: 'Високопродуктивний рушій синхронізації для платформи NaN•Web'
+tags:
+  - sync
+  - deploy
+  - tool
+
+content:
+  - ui-header:
+      brand: 'NaN•Sync'
+      github: 'https://github.com/nan0web/sync'
+      platformUrl: 'https://nan0web.yaro.page'
+      platformLabel: 'NaN•Web'
+  - ui-hero:
+      badge: 'v1.0.0'
+      title: 'Диференційне Синхронізування Статики'
+      subtitle: 'Неймовірно швидке диференційне розгортання з вбудованим віддаленим маніфестом та механізмом блокувань.'
+      install: 'npm i -g @nan0web/sync'
+      cta: 'Читати Документацію'
+      ctaHref: '#використання'
+  - h2: 'Можливості'
+  - ui-feature-grid:
+      items:
+        - title: 'Диференційна Синхронізація'
+          description: 'Обчислює відмінності через порівняння локального та віддаленого індексів з MD5-хешуванням. Тільки змінені файли завантажуються.'
+          icon: '🚀'
+        - title: 'Віддалений Маніфест'
+          description: 'Зберігає директорію .nan0web на сервері для уникнення повного сканування та підтримки багаторозробницького середовища.'
+          icon: '🗺'
+        - title: 'Атомарні Блокування'
+          description: 'Автоматично створює тимчасові lock-файли для запобігання паралельним модифікаціям одного проєкту.'
+          icon: '🔒'
+  - h2: 'Архітектура'
+  - p: 'Система підтримує різні транспортні протоколи (Адаптери) для забезпечення максимальної сумісності:'
+  - ui-adapters:
+      items:
+        - title: 'FTP Адаптер (Готово)'
+          description: 'Стандартний протокол передачі файлів. Використовує basic-ftp для надійних зʼєднань.'
+          icon: 'folder'
+        - title: 'SSH/SFTP Адаптер (В плані)'
+          description: 'Захищений протокол передачі для систем високого рівня безпеки.'
+          icon: 'ssh'
+        - title: 'S3 Object Storage (В плані)'
+          description: 'Хмарне обʼєктне сховище (AWS, DigitalOcean Spaces, Cloudflare R2).'
+          icon: 's3'
+        - title: 'Local File System (В плані)'
+          description: 'Локальна синхронізація для тестових середовищ та збірок.'
+          icon: 'local'
+  - source: 'docs/uk/README.md'
+  - h2: 'Документація'
+  - p: '<a href="https://github.com/nan0web/sync/blob/master/CHANGELOG.md" style="color:var(--accent)">Changelog</a> — лог змін та оновлень.<br><a href="https://github.com/nan0web/sync" style="color:var(--accent)">GitHub Repository</a> — вихідний код та документація.'
+  - ui-footer:
+      license: 'ISC License'
+      licenseUrl: 'https://github.com/nan0web/sync/blob/main/LICENSE'
+      year: '2026'
+      platform: 'NaN•Web Platform'
+      platformUrl: 'https://nan0web.yaro.page'
+      cai: 'Collective and Artificial Intelligence — CnAi'
+      caiUrl: 'https://nan0web.yaro.page/glossary.html#cnai'

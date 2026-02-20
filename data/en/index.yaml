@@ -1,0 +1,59 @@
+title: 'NaN•Sync'
+description: 'High-performance site synchronization engine for the NaN•Web platform'
+tags:
+  - sync
+  - deploy
+  - tool
+
+content:
+  - ui-header:
+      brand: 'NaN•Sync'
+      github: 'https://github.com/nan0web/sync'
+      platformUrl: 'https://nan0web.yaro.page'
+      platformLabel: 'NaN•Web'
+  - ui-hero:
+      badge: 'v1.0.0'
+      title: 'Differential Static Synchronization'
+      subtitle: 'Blazingly fast differential deployment with built-in remote manifest and atomic locking mechanism.'
+      install: 'npm i -g @nan0web/sync'
+      cta: 'Read Documentation'
+      ctaHref: '#usage'
+  - h2: 'Capabilities'
+  - ui-feature-grid:
+      items:
+        - title: 'Differential Sync'
+          description: 'Computes differences by comparing local and remote indices with MD5 hashing. Only changed files are uploaded.'
+          icon: '🚀'
+        - title: 'Remote Manifest'
+          description: 'Stores the .nan0web directory on the server to avoid full scanning and support multi-developer environments.'
+          icon: '🗺'
+        - title: 'Atomic Locking'
+          description: 'Automatically creates temporary lock files to prevent concurrent modifications of the same project.'
+          icon: '🔒'
+  - h2: 'Architecture'
+  - p: 'The system supports various transport protocols (Adapters) for maximum compatibility:'
+  - ui-adapters:
+      items:
+        - title: 'FTP Adapter (Ready)'
+          description: 'Standard file transfer protocol. Uses basic-ftp for reliable connections.'
+          icon: 'folder'
+        - title: 'SSH/SFTP Adapter (Planned)'
+          description: 'Secure transfer protocol for high-security systems.'
+          icon: 'ssh'
+        - title: 'S3 Object Storage (Planned)'
+          description: 'Cloud object storage (AWS, DigitalOcean Spaces, Cloudflare R2).'
+          icon: 's3'
+        - title: 'Local File System (Planned)'
+          description: 'Local sync for test environments and builds.'
+          icon: 'local'
+  - source: 'README.md'
+  - h2: 'Documentation'
+  - p: '<a href="https://github.com/nan0web/sync/blob/master/CHANGELOG.md" style="color:var(--accent)">Changelog</a> — update history.<br><a href="https://github.com/nan0web/sync" style="color:var(--accent)">GitHub Repository</a> — source code and full documentation.'
+  - ui-footer:
+      license: 'ISC License'
+      licenseUrl: 'https://github.com/nan0web/sync/blob/main/LICENSE'
+      year: '2026'
+      platform: 'NaN•Web Platform'
+      platformUrl: 'https://nan0web.yaro.page'
+      cai: 'Collective and Artificial Intelligence — CnAi'
+      caiUrl: 'https://nan0web.yaro.page/glossary.html#cnai'

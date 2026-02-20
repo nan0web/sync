@@ -1,0 +1,39 @@
+{
+	"name": "@nan0web/sync",
+	"version": "1.0.0",
+	"description": "High-performance site synchronization engine with remote manifests and atomic locks.",
+	"type": "module",
+	"bin": {
+		"nan0sync": "./bin/nan0sync.js",
+		"nan0-sync": "./bin/nan0sync.js"
+	},
+	"main": "src/Export.js",
+	"scripts": {
+		"test": "node --test src/*.test.js",
+		"test:docs": "node --test src/README.md.js",
+		"test:snapshot": "node --test --test-timeout=3333 bin/*.test.js",
+		"test:types": "tsc --noEmit",
+		"test:all": "npm run test && npm run test:docs && npm run test:snapshot && npm run test:types && npm run release:verify",
+		"release:spec": "node --test release/**/*.spec.js",
+		"release:verify": "node --test release/**/*.spec.js",
+		"build": "npm run test:docs && cp README.md public/README.md && vite build && cp -r data dist/web/data",
+		"dev": "npm run test:docs && cp README.md public/README.md && vite",
+		"docs:build": "npm run build",
+		"docs:dev": "npm run dev"
+	},
+	"dependencies": {
+		"@nan0web/icons": "workspace:*",
+		"@nan0web/log": "workspace:*",
+		"@nan0web/ui-cli": "workspace:*",
+		"basic-ftp": "^5.0.5",
+		"js-yaml": "^4.1.1",
+		"lit": "^3.3.2"
+	},
+	"devDependencies": {
+		"nan0web.app": "workspace:*",
+		"typescript": "^5.3.3",
+		"vite": "^7.3.1"
+	},
+	"license": "ISC",
+	"author": "YaRaSLove (ЯRаСлав) <support@yaro.page>"
+}
