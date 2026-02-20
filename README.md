@@ -36,14 +36,17 @@ The `nan0sync` command is the primary way to interact with the engine.
 
 How to use nan0sync via CLI?
 ```bash
-# Check status without modifying remote (dry-run mode)
-nan0sync status --env production
-
 # Run live synchronization
-nan0sync push --env production
+nan0sync push
 
-# Force unlock if atomic lock gets stuck
-nan0sync push --force
+# Preview changes without uploading
+nan0sync push --dry-run
+
+# Show detailed paths, config, and FTP error codes
+nan0sync push --debug
+
+# Check status and diff preview
+nan0sync status
 ```
 
 ## Configuration (SyncConfig)
