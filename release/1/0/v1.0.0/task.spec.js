@@ -33,7 +33,8 @@ describe('Release v1.0.0: The Complete nan0sync Engine', () => {
 		assert.equal(diff.upload.length, 2, 'Should upload changed a.txt and new b.txt')
 		assert.equal(diff.delete.length, 0, 'Should not delete anything')
 
-		// fs.rmSync(tempDir, { recursive: true, force: true }) // Clean up with DBFS later
+		await db.drop(`${tempDir}/a.txt`)
+		await db.drop(tempDir)
 	})
 
 	it('[2] Config parser loads FTP by default with appropriate fallbacks', async () => {
