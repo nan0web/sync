@@ -27,7 +27,7 @@ export class FTPAdapter {
 				},
 			})
 			this.client.trackProgress((info) => {
-				// We could hook progress bar here
+				if (this.onProgress) this.onProgress(info)
 			})
 		} catch (err) {
 			this.logger.error(`FTP Connection failed: ${err.message}`)

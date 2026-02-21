@@ -1,6 +1,6 @@
 {
 	"name": "@nan0web/sync",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "High-performance site synchronization engine with remote manifests and atomic locks.",
 	"type": "module",
 	"bin": {
@@ -9,6 +9,7 @@
 	},
 	"files": [
 		"src/**/*.js",
+		"src/scripts/**",
 		"!src/web/**",
 		"!src/**/*.test.js",
 		"bin/**/*.js",
