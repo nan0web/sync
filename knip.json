@@ -1,0 +1,17 @@
+{
+	"entry": ["bin/nan0sync.js"],
+	"project": ["src/**/*.js", "bin/**/*.js", "!src/**/*.test.js"],
+	"ignore": ["release/**", "scripts/**", "src/README.md.js", "src/web/**", "src/Engine.js"],
+	"ignoreDependencies": [
+		"@nan0web/icons",
+		"@nan0web/ui-cli",
+		"@nan0web/db-fs",
+		"basic-ftp",
+		"js-yaml",
+		"lit",
+		"nan0web.app",
+		"typescript",
+		"vite"
+	],
+	"ignoreExportsUsedInFile": true
+}

@@ -473,7 +473,8 @@ async function runEngine() {
 			await adapter.uploadFile(unpackLocal, unpackRemote)
 
 			// 4. Extract each chunk via HTTP
-			const unpackBase = `https://${config.host}/_nan0sync_unpack.php`
+			const unpackHost = config.httpHost || config.host
+			const unpackBase = `https://${unpackHost}/_nan0sync_unpack.php`
 			let extractedTotal = 0
 			for (let i = 0; i < chunks.length; i++) {
 				yield {
@@ -697,6 +698,7 @@ async function runEngine() {
 		process.exit(1)
 	}
 	console.log('\n') // Final newline
+	process.exit(0)
 }
 
 runEngine()

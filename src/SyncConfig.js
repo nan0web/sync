@@ -10,6 +10,7 @@ export class SyncConfig {
 	static target = { type: 'string', default: '' }
 	static env = { type: 'string', default: 'stage', options: ['stage', 'prod'] }
 	static host = { type: 'string', default: '' }
+	static httpHost = { type: 'string', default: '' }
 	static port = { type: 'number', default: 21 }
 	static user = { type: 'string', default: '' }
 	static password = { type: 'string', default: '' }
@@ -30,6 +31,7 @@ export class SyncConfig {
 		this.target = overrides.target ?? SyncConfig.target.default
 		this.env = overrides.env ?? SyncConfig.env.default
 		this.host = overrides.host ?? SyncConfig.host.default
+		this.httpHost = overrides.httpHost ?? SyncConfig.httpHost.default
 		this.port = overrides.port ?? SyncConfig.port.default
 		this.user = overrides.user ?? SyncConfig.user.default
 		this.password = overrides.password ?? SyncConfig.password.default
@@ -151,6 +153,7 @@ function loadEnv() {
 		NAN0_SYNC_SOURCE: 'source',
 		NAN0_SYNC_TARGET: 'target',
 		NAN0_SYNC_HOST: 'host',
+		NAN0_SYNC_HTTP_HOST: 'httpHost',
 		NAN0_SYNC_PORT: 'port',
 		NAN0_SYNC_USER: 'user',
 		NAN0_SYNC_PASSWORD: 'password',

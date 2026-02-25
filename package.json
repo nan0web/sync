@@ -1,6 +1,6 @@
 {
 	"name": "@nan0web/sync",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "High-performance site synchronization engine with remote manifests and atomic locks.",
 	"type": "module",
 	"bin": {
@@ -21,16 +21,17 @@
 		"test:docs": "node --test src/README.md.js",
 		"test:snapshot": "node --test --test-timeout=3333 bin/*.test.js",
 		"test:types": "tsc --noEmit",
-		"test:all": "npm run test && npm run test:docs && npm run test:snapshot && npm run test:types && npm run release:verify",
+		"test:all": "npm run test && npm run test:docs && npm run test:snapshot && npm run test:types && npm run knip",
 		"release:spec": "node --test release/**/*.spec.js",
 		"release:verify": "node --test release/**/*.spec.js",
+		"knip": "knip --production",
 		"build": "npm run test:docs && cp README.md public/README.md && vite build && cp -r data dist/web/data",
 		"dev": "npm run test:docs && cp README.md public/README.md && vite",
 		"docs:build": "npm run build",
 		"docs:dev": "npm run dev"
 	},
 	"dependencies": {
-		"@nan0web/db-fs": "^1.1.1",
+		"@nan0web/db-fs": "^1.1.2",
 		"@nan0web/log": "^1.1.1",
 		"basic-ftp": "^5.0.5"
 	},
@@ -38,6 +39,7 @@
 		"@nan0web/icons": "workspace:*",
 		"@nan0web/ui-cli": "workspace:*",
 		"js-yaml": "^4.1.1",
+		"knip": "^5.85.0",
 		"lit": "^3.3.2",
 		"nan0web.app": "workspace:*",
 		"typescript": "^5.3.3",

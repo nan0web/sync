@@ -13,7 +13,6 @@ calculating remote vs local differences using MD5 hashing, atomic locking,
 and remote manifests to reduce overhead during continuous deployment.
 
 Core Features:
-
 - **Differential Sync** — only changed files are uploaded and removed files are deleted.
 - **Remote Manifest** — stores the directory state remotely to skip full FTP directory scanning.
 - **Atomic Locking** — prevents concurrent deployments.
@@ -22,13 +21,11 @@ Core Features:
 ## Installation
 
 How to install with npm?
-
 ```bash
 npm install -g @nan0web/sync
 ```
 
 How to install with pnpm?
-
 ```bash
 pnpm add -g @nan0web/sync
 ```
@@ -38,16 +35,9 @@ pnpm add -g @nan0web/sync
 The `nan0sync` command is the primary way to interact with the engine.
 
 How to use nan0sync via CLI?
-
 ```bash
 # Run live synchronization
 nan0sync push
-
-# FTP Bulk Mode (requires PHP >= 5.3 on server) - 48x faster for many files
-nan0sync push --php
-
-# Configure chunking parameters for Bulk Mode
-nan0sync push --php --chunk-size 100 --chunk-files 500
 
 # Preview changes without uploading
 nan0sync push --dry-run
@@ -57,9 +47,6 @@ nan0sync push --debug
 
 # Check status and diff preview
 nan0sync status
-
-# Delete remote manifest to force a full re-sync
-nan0sync reset
 ```
 
 ## Configuration (SyncConfig)
@@ -67,7 +54,6 @@ nan0sync reset
 Sync supports hierarchical config loading (`sync.config.js`). It reads default, env, and local configs.
 
 How to create sync.config.js?
-
 ```javascript
 export default {
   adapter: 'ftp',
@@ -78,7 +64,7 @@ export default {
   remoteManifest: true,
   lock: true,
   lockTTL: 600,
-  gitCheck: true,
+  gitCheck: true
 }
 ```
 
@@ -89,21 +75,19 @@ export default {
 The engine executes the synchronization state machine via a generator function `run()`.
 
 How to use SyncEngine programmatically?
-
 ```js
 import { SyncEngine, SyncConfig } from '@nan0web/sync'
 const config = new SyncConfig({
-  adapter: 'ftp',
-  source: 'dist/web',
-  host: 'example.com',
-  user: 'user',
-  password: 'pwd',
-  dryRun: true,
+	adapter: 'ftp',
+	source: 'dist/web',
+	host: 'example.com',
+	user: 'user',
+	password: 'pwd',
+	dryRun: true,
 })
 const engine = new SyncEngine(config)
 engine.adapter.connect = async () => {} // mock to prevent test from hanging
 ```
-
 ## Contributing
 
 How to contribute? - [check here]($pkgURL/blob/main/CONTRIBUTING.md)
