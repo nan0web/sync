@@ -1,6 +1,6 @@
 {
 	"name": "@nan0web/sync",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "High-performance site synchronization engine with remote manifests and atomic locks.",
 	"type": "module",
 	"bin": {
@@ -31,8 +31,8 @@
 		"docs:dev": "npm run dev"
 	},
 	"dependencies": {
-		"@nan0web/db-fs": "^1.1.2",
-		"@nan0web/log": "^1.1.1",
+		"@nan0web/db-fs": "workspace:*",
+		"@nan0web/log": "workspace:*",
 		"basic-ftp": "^5.0.5"
 	},
 	"devDependencies": {
