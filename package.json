@@ -9,6 +9,7 @@
 	},
 	"files": [
 		"src/**/*.js",
+		"!src/**/*.md.js",
 		"src/scripts/**",
 		"!src/web/**",
 		"!src/**/*.test.js",
@@ -31,13 +32,13 @@
 		"docs:dev": "npm run dev"
 	},
 	"dependencies": {
-		"@nan0web/db-fs": "workspace:*",
-		"@nan0web/log": "workspace:*",
+		"@nan0web/db-fs": "*",
+		"@nan0web/log": "*",
 		"basic-ftp": "^5.0.5"
 	},
 	"devDependencies": {
-		"@nan0web/icons": "workspace:*",
-		"@nan0web/ui-cli": "workspace:*",
+		"@nan0web/icons": "*",
+		"@nan0web/ui-cli": "*",
 		"js-yaml": "^4.1.1",
 		"knip": "^5.85.0",
 		"lit": "^3.3.2",
